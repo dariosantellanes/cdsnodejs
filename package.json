@@ -1,0 +1,52 @@
+{
+  "name": "cdsnodejs",
+  "version": "1.0.0",
+  "description": "Codigo Del Sur Nodejs test",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
+    "build": "babel src -s -D -d dist --presets es2015,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build",
+    "test": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dariosantellanes/cdsnodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dariosantellanes/cdsnodejs/issues"
+  },
+  "homepage": "https://github.com/dariosantellanes/cdsnodejs#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.19.2",
+    "config": "^3.3.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.3"
+  }
+}

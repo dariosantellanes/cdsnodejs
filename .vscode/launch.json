@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "name": "Launch Server",
+            "request": "launch",
+            "program": "${workspaceFolder}/dist/index.js",
+            "preLaunchTask": "npm: build",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "skipFiles": [
+                "node_modules/**/*.js"
+            ],
+            "outFiles": [
+                "${workspaceRoot}/dist"
+            ],
+            "sourceMaps": true,
+            "stopOnEntry": true
+        }
+    ]
+}
