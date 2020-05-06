@@ -3,10 +3,16 @@ export default (tokenService) => {
 		try {
 			const auth = req.header('Authorization');
 			const token = auth.replace('Bearer ', '');
-			req.auth = tokenService.decodeToken(token);
-			next();
+			if (await tokenService.isTokenValid(token)) {
+				req.auth = await tokenService.decodeToken(token);
+				req.auth.token = token;
+				next();
+			} else {
+				res.status(400).send({ error: "Invalid Token" });
+			}
+
 		} catch (err) {
-			res.status(err.code || 400).send({ error: err.message })
+			res.status(err.code || 500).send({ error: err.message })
 		};
 	}
 

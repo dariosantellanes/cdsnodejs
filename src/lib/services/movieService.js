@@ -16,10 +16,10 @@ export class MovieService {
             const endpoint = keyword
                 ? `${process.env.TMDB_API_SEARCH_ENDPOINT}?query=${keyword}`
                 : process.env.TMDB_API_DISCOVER_ENDPOINT;
-
+            //Callout to external service
             const response = await axios.get(`${process.env.TMDB_API_URL}/${endpoint}`, opts);
             const data = response.data.results;
-
+            //Process results
             data.forEach(x => {
                 x.suggestionScore = Math.floor(Math.random() * 99);
                 x.external_id = x.id;
@@ -28,7 +28,7 @@ export class MovieService {
                 delete x.poster_path;
                 delete x.backdrop_path;
             });
-
+            //Sort results by suggestionScore ascending
             data.sort((x, y) => {
                 return x.suggestionScore - y.suggestionScore;
             });
@@ -42,10 +42,17 @@ export class MovieService {
 
     async getFavoriteMovies(userId) {
         const results = await this.repository.getUserFavorites(userId);
+        //Convert boolean fields and add suggestionForTodayScore
         results.forEach((x) => {
             x.video = !!x.video;
             x.adult = !!x.adult;
+            x.suggestionForTodayScore = Math.floor(Math.random() * 99);
         });
+        //Sort results by suggestionForTodayScore ascending
+        results.sort((x, y) => {
+            return x.suggestionForTodayScore - y.suggestionForTodayScore;
+        });
+
         return results;
     }
 

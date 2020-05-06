@@ -21,13 +21,22 @@ export default ({ tokenService, userService, movieService }) => {
     router.post('/login', schemaValidation(loginSchema), async (req, res) => {
         try {
             const user = await userService.loginUser(req.body);
-            const token = tokenService.generateToken(user.id);
-            res.status(201).send({ token });
+            const token = await tokenService.generateToken(user.id);
+            res.status(200).send({ token });
         } catch (err) {
             res.status(err.code || 500).send({ errors: err.message });
         }
     });
 
+
+    router.post('/logout', tokenValidation, async (req, res) => {
+        try {
+            await tokenService.invalidateToken(req.auth.token);
+            res.status(200).send();
+        } catch (err) {
+            res.status(err.code || 500).send({ errors: err.message });
+        }
+    });
 
     router.get('/movies', tokenValidation, async (req, res) => {
         const { keyword } = req.query;
@@ -42,7 +51,7 @@ export default ({ tokenService, userService, movieService }) => {
     router.post('/movies/favorites', tokenValidation, schemaValidation(movieSchema), async (req, res) => {
         try {
             const results = await movieService.addFavoriteMovie({ ...req.body, user_id: req.auth.userId });
-            res.status(200).send(results);
+            res.status(201).send(results);
         } catch (err) {
             res.status(err.code || 500).send({ errors: err.message });
         }
