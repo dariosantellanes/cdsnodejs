@@ -178,6 +178,122 @@
 			"response": []
 		},
 		{
+			"name": "Login with invalid email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61a188a-a02c-45b8-8277-c79d45850f8a",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"none@c.com\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/login",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Loginsinto the system and obtains a token"
+			},
+			"response": []
+		},
+		{
+			"name": "Login with invalid password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33aed34f-62bd-4fe1-a0e0-f00b59da2ad8",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"b@c.com\",\n\t\"password\": \"abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/login",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Loginsinto the system and obtains a token"
+			},
+			"response": []
+		},
+		{
+			"name": "Get movies without a token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0397b38b-afe1-4fb7-9a1d-4043f43e4e45",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get movies as user1",
 			"event": [
 				{
@@ -326,6 +442,101 @@
 			"response": []
 		},
 		{
+			"name": "Add duplicate favorite movie as user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a76ea21-57be-42a0-9d02-f0c84cc65cef",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{selectedMovieUser1}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add favorite movie without a token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afe78d6a-63ee-44ee-8b52-f3499f6d7256",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{selectedMovieUser1}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get favorite movies as user1",
 			"event": [
 				{
@@ -399,6 +610,41 @@
 							"type": "string"
 						}
 					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get favorite movies without a token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "97cda721-a0ab-4eb1-ae6a-72a71e5f0b17",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],

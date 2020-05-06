@@ -1,6 +1,6 @@
 
 import { UserException } from '../exception/userException';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export class UserService {
     constructor(repository) {
