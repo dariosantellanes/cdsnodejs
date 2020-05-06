@@ -4,7 +4,7 @@
   "description": "Codigo Del Sur Nodejs test",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -delay 3000 -w src -x 'npm start'",
+    "dev": "nodemon -w src -x 'npm start'",
     "build": "babel src -s -D -d dist",
     "start": "node -r dotenv/config dist",
     "prestart": "npm run -s build",

@@ -5,7 +5,7 @@ import routes from '../api/routes'
 import bodyParser from 'body-parser';
 import bodyParserError from 'bodyparser-json-error';
 
-const startServer = (userService, tokenService) => {
+const startServer = (tokenService, userService, movieService) => {
 	let app = express();
 	app.server = http.createServer(app);
 	app.use(helmet());
@@ -14,8 +14,9 @@ const startServer = (userService, tokenService) => {
 	}));
 
 	app.use('/api', routes({
-		userService,
 		tokenService,
+		userService,
+		movieService
 	}));
 
 	app.use(bodyParserError.beautify({

@@ -1,23 +1,34 @@
 import jwt from 'jsonwebtoken';
-
+import { TokenException } from '../exception/tokenException';
 
 export class TokenService {
     constructor() { }
 
-    generateToken(email) {
-        const opts = {
-            expiresIn: "1hr",
-            issuer: process.env.JWT_KEY
-        }
+    generateToken(userId) {
+        try {
+            const opts = {
+                expiresIn: "2hr",
+                issuer: process.env.JWT_KEY
+            }
 
-        return jwt.sign(
-            { email },
-            process.env.JWT_KEY,
-            opts);
+            return jwt.sign(
+                { userId },
+                process.env.JWT_KEY,
+                opts);
+
+        } catch (err) {
+            console.error(err);
+            throw new TokenException('An error ocurred creating a token', 500);
+        }
     }
 
     decodeToken(token) {
-        return jwt.verify(token, process.env.JWT_KEY);
+        try {
+            return jwt.verify(token, process.env.JWT_KEY);
+        } catch (err) {
+            console.error(err);
+            throw new TokenException('Invalid Token', 400);
+        }
     }
 }
 

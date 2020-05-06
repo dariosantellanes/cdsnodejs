@@ -17,19 +17,33 @@ export class UserRepository {
 
     add({ email, firstName, lastName, password }) {
         return this.dao.run(
-            `INSERT INTO users (email, firstName, lastName, password) VALUES (?, ?, ?, ?)`,
-            [email, firstName, lastName, password]);
+            `INSERT INTO users (email, 
+                                firstName, 
+                                lastName, 
+                                password) 
+                                VALUES (?, ?, ?, ?)`,
+            [
+                email,
+                firstName,
+                lastName,
+                password
+            ]);
     }
 
-    exists({ email }) {
+    exists(email) {
         return this.dao.get(
-            `SELECT EXISTS(SELECT 1 from users WHERE Email = ? ) as value`,
+            `SELECT EXISTS(
+                    SELECT 1 
+                    from users 
+                    WHERE email = ? ) as value`,
             [email]);
     }
 
-    get({ email }) {
+    get(email) {
         return this.dao.get(
-            `SELECT * from users WHERE Email = ?`,
+            `SELECT * 
+                from users 
+                WHERE Email = ?`,
             [email]);
     }
 }

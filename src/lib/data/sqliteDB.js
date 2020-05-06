@@ -7,6 +7,7 @@ export class Dao {
       if (err) {
         console.error('An error has ocurred connecting to sqlite');
       } else {
+        this.db.exec("PRAGMA foreign_keys = ON")
         console.log('Connected to sqlite');
       }
     });
@@ -28,6 +29,19 @@ export class Dao {
   get(sql, params = []) {
     return new Promise((resolve, reject) => {
       this.db.get(sql, params, (err, result) => {
+        if (err) {
+          console.error(err);
+          reject(new SqlException());
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  getAll(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, params, (err, result) => {
         if (err) {
           console.error(err);
           reject(new SqlException());

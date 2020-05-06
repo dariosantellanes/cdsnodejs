@@ -5,8 +5,8 @@ export default (tokenService) => {
 			const token = auth.replace('Bearer ', '');
 			req.auth = tokenService.decodeToken(token);
 			next();
-		} catch (error) {
-			res.status(err.code || 400).send({ error: 'Invalid Token' })
+		} catch (err) {
+			res.status(err.code || 400).send({ error: err.message })
 		};
 	}
 
