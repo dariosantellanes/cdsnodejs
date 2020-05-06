@@ -5,7 +5,7 @@ export class TokenRepository {
 
     createTable() {
         const sql =
-            `CREATE TABLE IF NOT EXISTS tokens (
+            `CREATE TABLE IF NOT EXISTS Tokens (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 token TEXT NOT NULL
             )`
@@ -14,7 +14,7 @@ export class TokenRepository {
 
     add(token) {
         return this.dao.run(
-            `INSERT INTO tokens (token)
+            `INSERT INTO Tokens (token)
                                 VALUES (?)`,
             [token]);
     }
@@ -23,7 +23,7 @@ export class TokenRepository {
         return this.dao.get(
             `SELECT EXISTS(
                     SELECT 1 
-                    from tokens 
+                    from Tokens 
                     WHERE token = ? ) as value`,
             [token]);
     }

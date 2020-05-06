@@ -33,9 +33,18 @@ const init = async () => {
 		await tokenRepository.createTable();
 
 		startServer(tokenService, userService, movieService);
+
+		//Close db before process exits
+		process.on('SIGINT', async () => {
+			await dao.close();
+			process.exit(0);
+		});
+
 	} catch (err) {
 		console.error(err);
 	}
 }
+
+
 
 init();

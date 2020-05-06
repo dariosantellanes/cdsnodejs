@@ -2,7 +2,9 @@ export default (tokenService) => {
 	const tokenValidation = async (req, res, next) => {
 		try {
 			const auth = req.header('Authorization');
-			const token = auth.replace('Bearer ', '');
+			const token = auth
+				? auth.replace('Bearer ', '')
+				: undefined;
 			if (await tokenService.isTokenValid(token)) {
 				req.auth = await tokenService.decodeToken(token);
 				req.auth.token = token;

@@ -44,7 +44,6 @@ export class TokenService {
 
     async isTokenValid(token) {
         let exists = await this.repository.exists(token);
-        console.log(exists);
         return !exists.value;
     }
 }

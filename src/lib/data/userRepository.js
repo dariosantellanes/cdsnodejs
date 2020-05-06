@@ -5,7 +5,7 @@ export class UserRepository {
 
     createTable() {
         const sql =
-            `CREATE TABLE IF NOT EXISTS users (
+            `CREATE TABLE IF NOT EXISTS Users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 email TEXT NOT NULL UNIQUE,
                 firstName TEXT NOT NULL,
@@ -17,7 +17,7 @@ export class UserRepository {
 
     add({ email, firstName, lastName, password }) {
         return this.dao.run(
-            `INSERT INTO users (email, 
+            `INSERT INTO Users (email, 
                                 firstName, 
                                 lastName, 
                                 password) 
@@ -34,7 +34,7 @@ export class UserRepository {
         return this.dao.get(
             `SELECT EXISTS(
                     SELECT 1 
-                    from users 
+                    from Users 
                     WHERE email = ? ) as value`,
             [email]);
     }
@@ -42,7 +42,7 @@ export class UserRepository {
     get(email) {
         return this.dao.get(
             `SELECT * 
-                from users 
+                from Users 
                 WHERE Email = ?`,
             [email]);
     }

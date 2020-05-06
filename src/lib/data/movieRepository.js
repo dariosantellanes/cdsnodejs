@@ -4,7 +4,7 @@ export class MovieRepository {
     }
     createTable() {
         const sql =
-            `CREATE TABLE IF NOT EXISTS movies (
+            `CREATE TABLE IF NOT EXISTS Movies (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER NOT NULL, 
                 external_id INTEGER NOT NULL UNIQUE,
@@ -38,7 +38,7 @@ export class MovieRepository {
         suggestionScore
     }) {
         return this.dao.run(
-            `INSERT INTO movies (external_id,
+            `INSERT INTO Movies (external_id,
                                 user_id, 
                                 popularity, 
                                 vote_average, 
@@ -72,7 +72,7 @@ export class MovieRepository {
         return this.dao.get(
             `SELECT EXISTS(
                 SELECT 1 
-                    from movies 
+                    from Movies 
                     WHERE external_id = ? ) as value`,
             [external_id]);
     }
@@ -91,7 +91,7 @@ export class MovieRepository {
                     overview,
                     suggestionScore,
                     addedAt
-                from movies 
+                from Movies 
                 WHERE user_id = ? `,
             [user_id]);
     }

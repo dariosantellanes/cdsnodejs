@@ -8,10 +8,15 @@ export default ({ tokenService, userService, movieService }) => {
     const router = Router();
     const { schemaValidation, tokenValidation } = middleware(tokenService);
 
-
     router.post('/users', schemaValidation(registerSchema), async (req, res) => {
         try {
-            await userService.registerUser(req.body);
+            const params = {
+                email: req.body.email,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                password: req.body.password
+            }
+            await userService.registerUser(params);
             res.status(201).send();
         } catch (err) {
             res.status(err.code || 500).send({ errors: err.message });
@@ -20,7 +25,12 @@ export default ({ tokenService, userService, movieService }) => {
 
     router.post('/login', schemaValidation(loginSchema), async (req, res) => {
         try {
-            const user = await userService.loginUser(req.body);
+            const params = {
+                email: req.body.email,
+                password: req.body.password
+            }
+
+            const user = await userService.loginUser(params);
             const token = await tokenService.generateToken(user.id);
             res.status(200).send({ token });
         } catch (err) {
@@ -50,7 +60,22 @@ export default ({ tokenService, userService, movieService }) => {
 
     router.post('/movies/favorites', tokenValidation, schemaValidation(movieSchema), async (req, res) => {
         try {
-            const results = await movieService.addFavoriteMovie({ ...req.body, user_id: req.auth.userId });
+            const params = {
+                external_id: req.body.external_id,
+                popularity: req.body.popularity,
+                vote_average: req.body.vote_average,
+                video: req.body.video,
+                vote_count: req.body.vote_count,
+                release_date: req.body.release_date,
+                original_language: req.body.original_language,
+                original_title: req.body.original_title,
+                adult: req.body.adult,
+                overview: req.body.overview,
+                suggestionScore: req.body.suggestionScore,
+                user_id: req.auth.userId
+            }
+
+            const results = await movieService.addFavoriteMovie(params);
             res.status(201).send(results);
         } catch (err) {
             res.status(err.code || 500).send({ errors: err.message });
