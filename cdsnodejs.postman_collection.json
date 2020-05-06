@@ -1,0 +1,547 @@
+{
+	"info": {
+		"_postman_id": "e7602a07-e215-4a5f-b91a-1e19bbc2c6f3",
+		"name": "cdsnodejs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ee627ca-d5f7-45e6-a411-75176745bf73",
+						"exec": [
+							"tests['CREATED response'] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"a@b.com\",\n\t\"firstName\": \"TestName1\",\n\t\"lastName\": \"TestName1\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/users",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Creates a new user with valid data"
+			},
+			"response": []
+		},
+		{
+			"name": "Create user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39603317-5efa-49c0-984a-68e48fa34e4f",
+						"exec": [
+							"tests['CREATED response'] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"b@c.com\",\n\t\"firstName\": \"TestName2\",\n\t\"lastName\": \"TestName2\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/users",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Creates a new user with valid data"
+			},
+			"response": []
+		},
+		{
+			"name": "Login user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "156bd2c6-e40d-4e74-8f58-db3ea6915a3f",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Token recieved'] = response.token !== undefined;",
+							"postman.setEnvironmentVariable(\"tokenUser1\", response.token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"a@b.com\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/login",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Loginsinto the system and obtains a token"
+			},
+			"response": []
+		},
+		{
+			"name": "Login user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6bff3950-67c9-4f80-a9c4-cabb7d4323e0",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Token recieved'] = response.token !== undefined;",
+							"postman.setEnvironmentVariable(\"tokenUser2\", response.token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"b@c.com\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/login",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Loginsinto the system and obtains a token"
+			},
+			"response": []
+		},
+		{
+			"name": "Get movies as user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "71a0e3fb-ee6b-452f-81e7-ac78f7edcc5c",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Recieved Data'] = response.length > 0;",
+							"tests['suggestionScore is valid'] = (response[0].suggestionScore >= 0 && response[0].suggestionScore <= 99);",
+							"postman.setEnvironmentVariable(\"selectedMovieUser1\", JSON.stringify(response[0]));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get movies as user1 filtering by keyword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "982ed2d9-9909-43ea-a21e-cfe7f382721f",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Recieved Data'] = response.length > 0;",
+							"tests['suggestionScore is valid'] = (response[0].suggestionScore >= 0 && response[0].suggestionScore <= 99);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies?keyword={{keyword}}",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "{{keyword}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add favorite movie as user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fed186ba-8d94-4792-8e1f-20c7af0fb9c6",
+						"exec": [
+							"tests['CREATED response'] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{selectedMovieUser1}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get favorite movies as user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0657625b-f128-4343-aafb-ab7b11becf2f",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Recieved Data'] = response.length === 1;",
+							"tests['suggestionScore is valid'] = (response[0].suggestionScore >= 0 && response[0].suggestionScore <= 99);",
+							"tests['suggestionForTodayScore valid'] = (response[0].suggestionForTodayScore >= 0 && response[0].suggestionForTodayScore <= 99);",
+							"tests['addedAt is valid'] = response[0].addedAt.length > 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get favorite movies as user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84bc3911-608f-4112-bd01-0b0ed60cc93e",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"tests['OK response'] = responseCode.code === 200;",
+							"tests['Recieved Data'] = response.length === 0;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eaae5c18-e62b-4861-8e39-5030b12a6cda",
+						"exec": [
+							"tests['OK response'] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/logout",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get movies as user1 logged out",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47bc94a7-1b19-4b7c-9aac-bd4850cdef8c",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get favorite movies as user1 logged out",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b785850-2524-4f5a-a2d9-9e0fa0dfa86f",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenUser1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:{{port}}/api/movies/favorites",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"movies",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
