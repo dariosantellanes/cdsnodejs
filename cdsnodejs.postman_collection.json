@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e7602a07-e215-4a5f-b91a-1e19bbc2c6f3",
+		"_postman_id": "06c80f76-5f0d-4dd5-b6af-fee5dbf2d2a3",
 		"name": "cdsnodejs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,9 +11,50 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0ee627ca-d5f7-45e6-a411-75176745bf73",
+						"id": "d8afef99-8515-44cb-a9ea-d5d899a62615",
 						"exec": [
 							"tests['CREATED response'] = responseCode.code === 201;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"a@b.com\",\n\t\"firstName\": \"TestName1\",\n\t\"lastName\": \"TestName1\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}:{{port}}/api/users",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Creates a new user with valid data"
+			},
+			"response": []
+		},
+		{
+			"name": "Create duplicate user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "454a301e-1182-444f-8267-c0fc3a8fb69b",
+						"exec": [
+							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
 						"type": "text/javascript"
 					}
@@ -52,7 +93,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "39603317-5efa-49c0-984a-68e48fa34e4f",
+						"id": "08c57a62-d06d-411e-a618-24c1e5ed05a2",
 						"exec": [
 							"tests['CREATED response'] = responseCode.code === 201;"
 						],
@@ -93,7 +134,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "156bd2c6-e40d-4e74-8f58-db3ea6915a3f",
+						"id": "8c5ed438-be70-4255-8f24-dd93d0bc351f",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -138,7 +179,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6bff3950-67c9-4f80-a9c4-cabb7d4323e0",
+						"id": "34e646b7-6afa-404e-a2a1-fe8a9455201c",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -183,7 +224,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e61a188a-a02c-45b8-8277-c79d45850f8a",
+						"id": "829184c0-a6de-4527-a260-7d9c05d32abd",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -224,7 +265,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "33aed34f-62bd-4fe1-a0e0-f00b59da2ad8",
+						"id": "6c26322e-3c14-4711-8ab7-1e8beeb055cd",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -265,7 +306,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0397b38b-afe1-4fb7-9a1d-4043f43e4e45",
+						"id": "af836815-b4d5-4e01-ab63-77d3e7908621",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -299,7 +340,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "71a0e3fb-ee6b-452f-81e7-ac78f7edcc5c",
+						"id": "6d979e9a-3cf7-4c47-b6f8-af2d18ecec8c",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -345,7 +386,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "982ed2d9-9909-43ea-a21e-cfe7f382721f",
+						"id": "5f7b5c2f-d496-4975-a7dc-a9c0c0df29cb",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -396,7 +437,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fed186ba-8d94-4792-8e1f-20c7af0fb9c6",
+						"id": "2f0115d0-c6eb-4298-87b4-faeeb80a2132",
 						"exec": [
 							"tests['CREATED response'] = responseCode.code === 201;"
 						],
@@ -447,7 +488,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6a76ea21-57be-42a0-9d02-f0c84cc65cef",
+						"id": "5273e3c5-f981-4a6f-9cb2-46a2c51c1ce9",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -498,7 +539,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "afe78d6a-63ee-44ee-8b52-f3499f6d7256",
+						"id": "746618f8-3ece-45c1-81b1-d867fbb4bb6f",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -542,7 +583,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0657625b-f128-4343-aafb-ab7b11becf2f",
+						"id": "85001037-9a5d-4559-83de-cf57a4554fa3",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -589,7 +630,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "84bc3911-608f-4112-bd01-0b0ed60cc93e",
+						"id": "0281cb03-4d89-4c8c-a1d6-68106fd14470",
 						"exec": [
 							"var response = JSON.parse(responseBody);",
 							"tests['OK response'] = responseCode.code === 200;",
@@ -634,7 +675,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "97cda721-a0ab-4eb1-ae6a-72a71e5f0b17",
+						"id": "fb882395-1355-4a4b-a018-58cf60913c76",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -669,7 +710,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "eaae5c18-e62b-4861-8e39-5030b12a6cda",
+						"id": "f66dbb71-f2ba-45b3-b035-b8cdb64c9220",
 						"exec": [
 							"tests['OK response'] = responseCode.code === 200;"
 						],
@@ -710,7 +751,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "47bc94a7-1b19-4b7c-9aac-bd4850cdef8c",
+						"id": "07073e0a-9a9e-4ae6-baf1-bc159ea7e152",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
@@ -752,7 +793,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9b785850-2524-4f5a-a2d9-9e0fa0dfa86f",
+						"id": "c1b2d9d1-c00d-440d-ae0d-7ca40e9d5e3f",
 						"exec": [
 							"tests['BAD REQUEST response'] = responseCode.code === 400;"
 						],
